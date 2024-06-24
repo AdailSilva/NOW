@@ -1,0 +1,32 @@
+# Docker-Compose Now Database (To deploy, run the command: 'docker-compose up --build -d')
+
+version: "3.9"
+
+services:
+
+  now-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: 'now-app'
+    image: adailsilva/now-app_platform_linux-x86_64:latest
+    hostname: now-app-compose
+    mem_limit: 1024m
+    restart: on-failure #always
+#    environment:
+#      SPRING_DATASOURCE_URL: jdbc:postgresql://now-postgres:5432/now_database?currentSchema=now_schema
+#      SPRING_DATASOURCE_USERNAME: postgres
+#      SPRING_DATASOURCE_PASSWORD: now
+    ports:
+      - "8080:8080"
+#    depends_on:
+#      - now-postgres
+    networks:
+      - now-network
+
+#volumes:
+#  db-data:
+
+networks: 
+  now-network:
+    driver: bridge
